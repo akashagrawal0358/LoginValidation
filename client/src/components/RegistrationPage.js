@@ -9,14 +9,18 @@ const RegistrationPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        fetch('http://localhost:8000/register', {
-            method : 'POST',
-            body : { name , email }
+
+        const response = await fetch('http://localhost:8000/register', {
+            method: 'POST',
+            body: {
+                name ,
+                email 
+            }
+
         })
-        .then( response => console.log(response) )
-        .catch( err => console.log(err) )      
-    }  
+            .then(response => console.log("successss"))
+            .catch(err => console.log(err))
+    }
 
 
 
