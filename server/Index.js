@@ -19,15 +19,14 @@ app.get('/', (req, res) => {
 
 
 
-
 const transporter = nodemailer.createTransport({
 
-    // For Using Ethereal email to check all the mails 
-    host: 'smtp.ethereal.email',
+    // For Using Gmail to send and receive mails
+    service: 'Gmail',
     port: 587,
     auth: {
-        user: 'gina27@ethereal.email',
-        pass: 'zuMByYBGAMrnJpUGDx',
+        user: process.env.USER,
+        pass: process.env.PASSWORD,
     }
 })
 
@@ -40,7 +39,8 @@ app.post('/register', (req, res) => {
     const { name, email } = req.body;
 
     const mailOptions = {
-        from: "'akash' <silva12akash@gmail.com>'",
+        // silva12akash@gmail.com , this gmail is used to send mail to user's gmail
+        from: "silva12akash@gmail.com",
         to: email,
         body: 'OTP Verification',
         html: `<h3> Hello, ${name}... </h3> <br> Your OTP for email verification is: ${otp}`,
