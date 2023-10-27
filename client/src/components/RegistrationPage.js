@@ -10,24 +10,26 @@ const RegistrationPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:8000/register', {
+        await fetch('http://localhost:8000/register', {
             method: 'POST',
-            body: {
-                name ,
-                email 
-            }
-
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email }),
         })
-            .then(response => console.log("successss"))
-            .catch(err => console.log(err))
-    }
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data.message);
+            })
+            .catch(error => console.error(error))
+    };
 
 
 
     return (
         <div className="login-container">
             <h2>Login</h2>
-            <form action="" method="post" onClick={handleSubmit} >
+            <form action="" method="post"  >
                 <div className="form-group">
                     <label htmlFor="username">Name</label>
                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -41,7 +43,7 @@ const RegistrationPage = () => {
                     <input type="text" />
                 </div>
                 <div className="form-group">
-                    <button type="submit">Registered</button>
+                    <button type="submit" onClick={handleSubmit}>Registered</button>
                 </div>
             </form>
         </div>
