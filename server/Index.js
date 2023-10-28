@@ -30,10 +30,19 @@ const transporter = nodemailer.createTransport({
     }
 })
 
+
+
+// Now, Can be access in any route
+let otp;
+
+// --------------------- Registration of User -------------------------
+
+
 app.post('/register', (req, res) => {
 
     // Generate Random string of 6 lettter
-    const otp = randomstring.generate(6);
+    otp = randomstring.generate(6);
+    //console.log(otp);
 
     // Requesting name and email of user
     const { name, email } = req.body;
@@ -61,15 +70,23 @@ app.post('/register', (req, res) => {
 
 
 
+// ---------------------- OTP-Verification ------------------------------------
 
 
 
+app.post('/otp-verification', (req, res) => {
+    const { verifyOTP } = req.body;
+    console.log(verifyOTP);
+    console.log(otp);
 
-
-
-
-
-
+    if (verifyOTP && verifyOTP.trim() === otp) {
+        res.json({ message: "OTP matched Successsfully" });
+    }
+    else {
+        console.log("OTP not matched");
+        res.json({ message: "OTP not matched.." });
+    }
+});
 
 
 

@@ -3,20 +3,20 @@ import React, { useState } from 'react';
 import '../styles/Registration.css'
 
 //  useHistory() replaced by useNavigate() that helps in navigating on different pages
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationPage = () => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-     
+
     // create an obj
     const navigate = useNavigate();
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
 
         if (!name || !email) {
             alert("Please enter required fields...")
@@ -35,8 +35,15 @@ const RegistrationPage = () => {
                     setName('');
                     setEmail('');
 
-                    //  After Successfull Otp gneration, navigates on OTPverification route page 
-                    navigate('/OTPverification');
+
+                    if (data.message === 'OTP sent successfully.') {
+                        // OTP generation was successful, navigate to OTP verification
+                        navigate('/OTPverification');
+                    } else {
+                        // Handle the case where OTP generation failed
+                        alert('Failed to generate OTP.');
+                    }
+
                 })
                 .catch(error => console.error(error))
         };
